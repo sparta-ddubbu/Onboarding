@@ -1,5 +1,6 @@
 import './style.css';
 import GnbComponent from '@/components/GNB';
+// import { StackProvider } from '@teamsparta/stack-core';
 
 export const metadata = {
   title: 'My App',
@@ -11,9 +12,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang='en'>
       <body>
         <main>
+          {/* <StackProvider theme='nbcLight'> */}
           <GnbComponent />
-
           {children}
+          {/* </StackProvider> */}
         </main>
       </body>
     </html>

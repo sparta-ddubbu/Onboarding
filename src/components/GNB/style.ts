@@ -1,7 +1,7 @@
+import { styleVariables } from '@/constants/style';
 import { zIndex } from '@/constants/zIndex';
 import styled from '@emotion/styled';
-import { neutralDay } from '@teamsparta/design-system';
-import Link from 'next/link';
+import { primitiveColor } from '@teamsparta/stack-tokens';
 
 export const Background = styled.nav`
   position: fixed;
@@ -17,8 +17,8 @@ export const Background = styled.nav`
 export const Content = styled.section`
   width: 100%;
   max-width: 1200px;
-  padding: 0px 24px;
-  height: 60px;
+  margin: 0px ${styleVariables.MOBILE_SIDE_PADDING}px;
+  height: ${styleVariables.PC_GNB_HEIGHT}px;
 
   display: flex;
   justify-content: space-between;
@@ -67,5 +67,5 @@ export const Right = styled.ul`
 `;
 
 export const RightMenuItem = styled(LeftMenuItem)`
-  color: ${neutralDay.gray70};
+  color: ${primitiveColor.neutral[70]};
 `;
