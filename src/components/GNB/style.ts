@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { primitiveColor } from '@teamsparta/stack-tokens';
 
 export const Background = styled.nav`
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   display: flex;

@@ -22,7 +22,7 @@ export const Content = styled.section`
   flex-direction: column;
   gap: 20px;
 
-  padding: ${styleVariables.PC_GNB_HEIGHT}px 0 60px;
+  padding-bottom: 60px;
 `;
 
 const CommonSection = styled.section`

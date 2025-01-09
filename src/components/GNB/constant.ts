@@ -33,6 +33,6 @@ export const MAIN_MENU_LIST: MenuItemType[] = [
 ];
 
 export const SUB_MENU_LIST: MenuItemType[] = [
-  { type: 'single', title: '나의 캠프', href: 'TODO' },
+  { type: 'single', title: '로그인', href: '/sign-in' }, // TODO: toggle 로그인 여부
   { type: 'single', title: '고객센터', href: 'TODO' },
 ];

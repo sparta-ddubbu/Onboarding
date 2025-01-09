@@ -1,7 +1,12 @@
-import React from 'react';
+'use client';
 
-const SignInComponent = () => {
-  return <>SignIn</>;
+import React from 'react';
+import Template from '@/components/SignIn';
+import { useSignIn } from './useSignIn';
+
+const SignInPage = () => {
+  const props = useSignIn();
+  return <Template {...props} />;
 };
 
-export default SignInComponent;
+export default SignInPage;
