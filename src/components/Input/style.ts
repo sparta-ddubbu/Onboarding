@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import { bodyM } from '@teamsparta/stack-font';
+import { bodyM, captionM } from '@teamsparta/stack-font';
 import { primitiveColor } from '@teamsparta/stack-tokens';
 
+export const Wrapper = styled.div``;
 export const Input = styled.input`
   ${bodyM};
 
@@ -22,4 +23,10 @@ export const Input = styled.input`
   &:focus {
     background: ${primitiveColor.neutral[20]};
   }
+`;
+
+export const ErrorMsg = styled.div`
+  ${captionM}
+  color: ${primitiveColor.red[40]};
+  margin-top: 5px;
 `;
