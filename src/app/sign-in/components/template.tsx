@@ -19,16 +19,8 @@ const SignInComponent = (props: SignInProps) => {
       <S.Content>
         <S.Title>로그인</S.Title>
         <S.Form onSubmit={props.handleSubmit}>
-          <Input
-            {...props.register('nickname')}
-            placeholder='닉네임 입력'
-            errorMessage={props.errors.nickname?.message}
-          />
-          <Input
-            {...props.register('password')}
-            placeholder='비밀번호 입력'
-            errorMessage={props.errors.password?.message}
-          />
+          <Input {...props.register('nickname')} placeholder='닉네임' errorMessage={props.errors.nickname?.message} />
+          <Input {...props.register('password')} placeholder='비밀번호' errorMessage={props.errors.password?.message} />
           <Button radius='rounded' colorScheme='primary' fullWidth>
             로그인
           </Button>

@@ -19,15 +19,12 @@ const SignUpComponent = (props: SignUpProps) => {
       <S.Content>
         <S.Title>회원가입</S.Title>
         <S.Form onSubmit={props.handleSubmit}>
+          <Input {...props.register('nickname')} placeholder='닉네임' errorMessage={props.errors.nickname?.message} />
+          <Input {...props.register('password')} placeholder='비밀번호' errorMessage={props.errors.password?.message} />
           <Input
-            {...props.register('nickname')}
-            placeholder='닉네임 입력'
-            errorMessage={props.errors.nickname?.message}
-          />
-          <Input
-            {...props.register('password')}
-            placeholder='비밀번호 입력'
-            errorMessage={props.errors.password?.message}
+            {...props.register('passwordConfirm')}
+            placeholder='비밀번호 확인'
+            errorMessage={props.errors.passwordConfirm?.message}
           />
           <Button radius='rounded' colorScheme='primary' fullWidth>
             로그인
