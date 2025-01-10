@@ -1,7 +1,12 @@
-import React from 'react';
+'use client';
 
-const SignUpComponent = () => {
-  return <>SignUp</>;
+import React from 'react';
+import SignUpComponent from '@/app/sign-up/components/template';
+import { useSignUp } from './components/hooks';
+
+const SignUpPage = () => {
+  const props = useSignUp();
+  return <SignUpComponent {...props} />;
 };
 
-export default SignUpComponent;
+export default SignUpPage;
