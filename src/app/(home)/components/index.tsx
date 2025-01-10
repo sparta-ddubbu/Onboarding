@@ -1,6 +1,7 @@
+'use client';
 import * as S from './style';
 
-const Template = () => {
+const HomeComponent = () => {
   return (
     <S.Background>
       <S.Content>
@@ -13,4 +14,4 @@ const Template = () => {
   );
 };
 
-export default Template;
+export default HomeComponent;

@@ -1,4 +1,4 @@
-'use client'; // TODO: deprecated
+'use client';
 
 import './style.css';
 import GnbComponent from '@/components/GNB';

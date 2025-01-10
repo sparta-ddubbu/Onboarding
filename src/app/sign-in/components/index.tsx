@@ -1,6 +1,6 @@
 import { FormEventHandler } from 'react';
 import * as S from './style';
-import Input from '../Input';
+import Input from '../../../components/Input';
 import { Button } from '@teamsparta/stack-button';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
@@ -15,7 +15,7 @@ export type SignInProps = {
   errors: FieldErrors<SignInFormParams>;
 };
 
-const Template = (props: SignInProps) => {
+const SignInComponent = (props: SignInProps) => {
   return (
     <S.Background>
       <S.Content>
@@ -48,4 +48,4 @@ const Template = (props: SignInProps) => {
   );
 };
 
-export default Template;
+export default SignInComponent;

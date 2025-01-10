@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { SignInFormParams, SignInProps } from '@/components/SignIn/template';
+import { SignInFormParams, SignInProps } from '@/app/sign-in/components';
 
 export const useSignIn = (): SignInProps => {
   const {
