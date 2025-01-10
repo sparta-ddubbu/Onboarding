@@ -3,11 +3,9 @@ import * as S from './style';
 import Input from '../../../components/Input';
 import { Button } from '@teamsparta/stack-button';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { SignInSchemaType } from './constant';
 
-export type SignInFormParams = {
-  nickname: string;
-  password: string;
-};
+export type SignInFormParams = SignInSchemaType & {};
 
 export type SignInProps = {
   handleSubmit: FormEventHandler<HTMLFormElement>;
@@ -22,20 +20,12 @@ const SignInComponent = (props: SignInProps) => {
         <S.Title>로그인</S.Title>
         <S.Form onSubmit={props.handleSubmit}>
           <Input
-            {...props.register('nickname', {
-              required: { value: true, message: '닉네임을 입력해주세요' },
-            })}
+            {...props.register('nickname')}
             placeholder='닉네임 입력'
             errorMessage={props.errors.nickname?.message}
           />
           <Input
-            {...props.register('password', {
-              required: { value: true, message: '비밀번호를 입력해주세요' },
-              minLength: {
-                value: 8,
-                message: '비밀번호 길이를 8자리 이상 입력해주세요',
-              },
-            })}
+            {...props.register('password')}
             placeholder='비밀번호 입력'
             errorMessage={props.errors.password?.message}
           />
