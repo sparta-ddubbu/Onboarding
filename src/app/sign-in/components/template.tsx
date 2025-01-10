@@ -1,6 +1,6 @@
 import { FormEventHandler } from 'react';
 import * as S from './style';
-import Input from '../../../components/Input';
+import Input from '../../../components/Input/template';
 import { Button } from '@teamsparta/stack-button';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { SignInSchemaType } from './constant';

@@ -1,7 +1,7 @@
 'use client';
 
 import './style.css';
-import GnbComponent from '@/components/GNB';
+import GnbComponent from '@/components/GNB/template';
 import { StackProvider } from '@teamsparta/stack-core';
 
 // export const metadata = {
