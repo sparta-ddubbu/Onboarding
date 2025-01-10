@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SignInComponent from '@/app/sign-in/components/template';
-import { useSignIn } from './useSignIn';
+import { useSignIn } from './components/hooks';
 
 const SignInPage = () => {
   const props = useSignIn();
