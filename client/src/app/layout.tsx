@@ -2,11 +2,10 @@
 
 import './style.css';
 import GnbComponent from '@/components/GNB/template';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StackProvider } from '@teamsparta/stack-core';
-import axios from 'axios';
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
-axios.defaults.withCredentials = true;
+const queryClient = new QueryClient();
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -14,8 +13,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body>
         <main>
           <StackProvider theme='nbcLight'>
-            <GnbComponent />
-            {children}
+            <QueryClientProvider client={queryClient}>
+              <GnbComponent />
+              {children}
+            </QueryClientProvider>
           </StackProvider>
         </main>
       </body>

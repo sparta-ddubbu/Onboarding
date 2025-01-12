@@ -1,7 +1,4 @@
-type UserTokenRespone = {
-  accessToken: string;
-  refreshToken: string;
-};
+type UserTokenRespone = { accessToken: string };
 
 export type SignInRequest = {
   nickname: string;
