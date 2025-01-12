@@ -2,6 +2,7 @@
 
 # dev
 .next
+.env
 
 # dependencies
 /node_modules

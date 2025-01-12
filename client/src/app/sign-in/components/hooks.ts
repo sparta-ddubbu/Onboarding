@@ -10,7 +10,7 @@ export const useSignIn = (): SignInProps => {
     handleSubmit,
   } = useForm<SignInFormParams>({ resolver: zodResolver(SignInSchema) });
 
-  const submitAction = (data: any) => {
+  const submitAction = (data: SignInFormParams) => {
     alert('submit!' + JSON.stringify(data));
   };
 
