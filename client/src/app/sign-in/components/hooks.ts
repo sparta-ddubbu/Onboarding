@@ -20,10 +20,10 @@ export const useSignIn = (): SignInProps => {
 
       apiClientMethods.setAccessToken(accessToken);
       // TODO: update loggedIn context
-      console.log('Login successful:', data);
+      console.log('SignIn successful:', data);
     },
     onError: (err) => {
-      console.error('Login failed:', err);
+      console.error('SignIn failed:', err);
     },
   });
 
