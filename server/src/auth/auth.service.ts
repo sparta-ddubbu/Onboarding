@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
+import { TokenPayload } from './jwt/jwt.strategy';
 
-type TokenPayload = { id: string; nickname: string };
 type TokenSet = { accessToken: string; refreshToken: string };
 
 @Injectable()
@@ -21,8 +21,8 @@ export class AuthService {
     return null;
   }
 
-  login(user: TokenPayload): TokenSet {
-    const payload = { nickname: user.nickname, id: user.id };
+  generateTokens(data: TokenPayload): TokenSet {
+    const payload = { nickname: data.nickname, id: data.id };
 
     const accessToken = this.jwtService.sign(payload, { expiresIn: '1h' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
