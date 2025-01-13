@@ -4,6 +4,7 @@ import Input from '../../../components/Input/template';
 import { Button } from '@teamsparta/stack-button';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { SignInSchemaType } from './constant';
+import { StackProvider } from '@teamsparta/stack-core';
 
 export type SignInFormParams = SignInSchemaType & {};
 
@@ -15,18 +16,24 @@ export type SignInProps = {
 
 const SignInComponent = (props: SignInProps) => {
   return (
-    <S.Background>
-      <S.Content>
-        <S.Title>로그인</S.Title>
-        <S.Form onSubmit={props.handleSubmit}>
-          <Input {...props.register('nickname')} placeholder='닉네임' errorMessage={props.errors.nickname?.message} />
-          <Input {...props.register('password')} placeholder='비밀번호' errorMessage={props.errors.password?.message} />
-          <Button radius='rounded' colorScheme='primary' fullWidth>
-            로그인
-          </Button>
-        </S.Form>
-      </S.Content>
-    </S.Background>
+    <StackProvider theme='nbcLight'>
+      <S.Background>
+        <S.Content>
+          <S.Title>로그인</S.Title>
+          <S.Form onSubmit={props.handleSubmit}>
+            <Input {...props.register('nickname')} placeholder='닉네임' errorMessage={props.errors.nickname?.message} />
+            <Input
+              {...props.register('password')}
+              placeholder='비밀번호'
+              errorMessage={props.errors.password?.message}
+            />
+            <Button radius='rounded' colorScheme='primary' fullWidth>
+              로그인
+            </Button>
+          </S.Form>
+        </S.Content>
+      </S.Background>
+    </StackProvider>
   );
 };
 
