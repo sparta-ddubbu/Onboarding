@@ -13,6 +13,7 @@ function withCheckLogin(Component: React.ComponentType) {
     useEffect(() => {
       if (!isLoggedIn) {
         if (typeof window !== 'undefined') {
+          // TODO (유진님): useEffect 내부에서는 항상 있다는 가정이었는데, 아닐 수 있나?
           const confirmed = confirm('로그인이 필요해요!');
 
           if (confirmed) {
