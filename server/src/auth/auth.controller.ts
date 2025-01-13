@@ -34,9 +34,7 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000, // TODO: 발급 유효기간과 통일 필요
     });
 
-    return {
-      accessToken: tokens.accessToken,
-    };
+    res.json({ accessToken: tokens.accessToken });
   }
 
   @Post('refresh-token') // TODO: 작업

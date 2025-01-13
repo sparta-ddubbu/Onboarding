@@ -5,8 +5,11 @@ import { SignInSchema } from './constant';
 import { useMutation } from '@tanstack/react-query';
 import APIs from '@/apis';
 import { apiClientMethods } from '@/apis/apiClient';
+import { PAGE_URLS } from '@/constants/page-urls';
+import { useRouter } from 'next/navigation';
 
 export const useSignIn = (): SignInProps => {
+  const router = useRouter();
   const {
     formState: { errors },
     register,
@@ -19,6 +22,9 @@ export const useSignIn = (): SignInProps => {
       const { accessToken } = data;
 
       apiClientMethods.setAccessToken(accessToken);
+
+      router.push(PAGE_URLS.home);
+
       // TODO: update loggedIn context
       console.log('SignIn successful:', data);
     },
