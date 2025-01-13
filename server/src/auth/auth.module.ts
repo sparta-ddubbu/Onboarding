@@ -4,6 +4,8 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt/jwt.strategy';
+import { UserModule } from 'src/user/user.module';
+import { UserService } from 'src/user/user.service';
 
 @Module({
   imports: [
@@ -12,6 +14,7 @@ import { JwtStrategy } from './jwt/jwt.strategy';
       secret: 'secretKey', // 환경 변수로 관리
       signOptions: { expiresIn: '1h' }, // 토큰 유효 기간
     }),
+    UserModule,
   ],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
