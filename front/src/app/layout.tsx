@@ -4,6 +4,8 @@ import './style.css';
 import GnbComponent from '@/components/GNB/template';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StackProvider } from '@teamsparta/stack-core';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const queryClient = new QueryClient();
 
