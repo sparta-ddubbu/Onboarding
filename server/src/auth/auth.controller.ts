@@ -4,6 +4,7 @@ import { UserService } from 'src/user/user.service';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 
+const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
 @Controller('auth')
@@ -28,6 +29,12 @@ export class AuthController {
 
     const tokens = this.authService.generateTokens(payload);
 
+    res.cookie(ACCESS_TOKEN_KEY, tokens.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 1000, // TODO: 발급 유효기간과 통일 필요
+    });
+
     res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -49,6 +56,12 @@ export class AuthController {
       const payload = this.jwtService.verify(refreshToken);
 
       const tokens = this.authService.generateTokens(payload);
+
+      res.cookie(ACCESS_TOKEN_KEY, tokens.accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 1000, // TODO: 발급 유효기간과 통일 필요
+      });
 
       res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, {
         httpOnly: true,

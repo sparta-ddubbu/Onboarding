@@ -20,6 +20,7 @@ export const useSignIn = (): SignInProps => {
       await APIs.auth.signInAPI(data).then(({ accessToken }) => {
         apiClientMethods.setAccessToken(accessToken);
         router.push(PAGE_URLS.home);
+        router.refresh();
       });
     } catch (e) {
       console.error('SignIn failed:', e);
