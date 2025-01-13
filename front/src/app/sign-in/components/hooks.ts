@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignInFormParams, SignInProps } from '@/app/sign-in/components/template';
 import { SignInSchema } from './constant';
-import { useMutation } from '@tanstack/react-query';
 import APIs from '@/apis';
 import { apiClientMethods } from '@/apis/apiClient';
 import { PAGE_URLS } from '@/constants/page-urls';
@@ -16,25 +15,15 @@ export const useSignIn = (): SignInProps => {
     handleSubmit,
   } = useForm<SignInFormParams>({ resolver: zodResolver(SignInSchema) });
 
-  const { mutate } = useMutation({
-    mutationFn: APIs.auth.signInAPI,
-    onSuccess: (data) => {
-      const { accessToken } = data;
-
-      apiClientMethods.setAccessToken(accessToken);
-
-      router.push(PAGE_URLS.home);
-
-      // TODO: update loggedIn context
-      console.log('SignIn successful:', data);
-    },
-    onError: (err) => {
-      console.error('SignIn failed:', err);
-    },
-  });
-
-  const submitAction = (data: SignInFormParams) => {
-    mutate(data);
+  const submitAction = async (data: SignInFormParams) => {
+    try {
+      await APIs.auth.signInAPI(data).then(({ accessToken }) => {
+        apiClientMethods.setAccessToken(accessToken);
+        router.push(PAGE_URLS.home);
+      });
+    } catch (e) {
+      console.error('SignIn failed:', e);
+    }
   };
 
   return {
