@@ -1,9 +1,7 @@
-'use client';
-
 import './style.css';
-import GnbComponent from '@/components/GNB/template';
 import * as dotenv from 'dotenv';
 dotenv.config();
+import GnbComponent from '@/components/GNB/template';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
