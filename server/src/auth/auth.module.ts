@@ -5,14 +5,15 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import { UserModule } from 'src/user/user.module';
-import { UserService } from 'src/user/user.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     PassportModule,
     JwtModule.register({
-      secret: 'secretKey', // 환경 변수로 관리
-      signOptions: { expiresIn: '1h' }, // 토큰 유효 기간
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '1h' },
     }),
     UserModule,
   ],
