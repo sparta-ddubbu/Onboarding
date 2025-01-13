@@ -8,7 +8,7 @@ export type TokenPayload = { id: string; nickname: string };
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // TODO: parse from cookie
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET_KEY,
     });

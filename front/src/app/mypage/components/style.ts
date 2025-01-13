@@ -33,17 +33,17 @@ const CommonSection = styled.section`
 `;
 
 export const Section1 = styled(CommonSection)`
-  background-color: ${primitiveColor.red[10]};
+  background-color: ${primitiveColor.blue[10]};
 `;
 
 export const Section2 = styled(CommonSection)`
-  background-color: ${primitiveColor.red[20]};
+  background-color: ${primitiveColor.blue[20]};
 `;
 
 export const Section3 = styled(CommonSection)`
-  background-color: ${primitiveColor.red[30]};
+  background-color: ${primitiveColor.blue[30]};
 `;
 
 export const Section4 = styled(CommonSection)`
-  background-color: ${primitiveColor.red[40]};
+  background-color: ${primitiveColor.blue[40]};
 `;

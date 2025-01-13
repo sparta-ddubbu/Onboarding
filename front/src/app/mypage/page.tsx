@@ -1,11 +1,13 @@
-'use client';
-
 import React from 'react';
 import MypageComponent from './components/template';
-import withCheckLogin from '@/container/withCheckLogIn';
+import CheckLoginServerComponent from '@/container/CheckLoginServerComponent';
 
 const Mypage = () => {
-  return <MypageComponent />;
+  return (
+    <CheckLoginServerComponent>
+      <MypageComponent />
+    </CheckLoginServerComponent>
+  );
 };
 
-export default withCheckLogin(Mypage);
+export default Mypage;

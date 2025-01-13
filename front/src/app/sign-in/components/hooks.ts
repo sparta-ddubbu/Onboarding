@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SignInFormParams, SignInProps } from '@/app/sign-in/components/template';
 import { SignInSchema } from './constant';
 import APIs from '@/apis';
-import { apiClientMethods } from '@/apis/apiClient';
 import { PAGE_URLS } from '@/constants/page-urls';
 import { useRouter } from 'next/navigation';
 
@@ -18,7 +17,6 @@ export const useSignIn = (): SignInProps => {
   const submitAction = async (data: SignInFormParams) => {
     try {
       await APIs.auth.signInAPI(data).then(({ accessToken }) => {
-        apiClientMethods.setAccessToken(accessToken);
         router.push(PAGE_URLS.home);
         router.refresh();
       });

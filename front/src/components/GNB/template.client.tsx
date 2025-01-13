@@ -7,7 +7,7 @@ type Props = {
   isLoggedIn: boolean;
 };
 
-const Template: React.FC<Props> = ({ isLoggedIn }) => {
+const ClientComponent: React.FC<Props> = ({ isLoggedIn }) => {
   const getSubMenuListWithLoginMenu = () => {
     const menuList = [...SUB_MENU_LIST];
 
@@ -73,4 +73,4 @@ const Template: React.FC<Props> = ({ isLoggedIn }) => {
   );
 };
 
-export default Template;
+export default ClientComponent;

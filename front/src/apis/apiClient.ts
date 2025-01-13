@@ -6,14 +6,6 @@ const apiClient = axios.create({
   withCredentials: true,
 });
 
-function setAccessToken(token: string) {
-  apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
-
-export const apiClientMethods = {
-  setAccessToken,
-};
-
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -21,20 +13,15 @@ apiClient.interceptors.response.use(
     if (error.response.status === 401) {
       try {
         const res = await APIs.auth.refreshAPI();
-
-        const newAccessToken = res.accessToken;
-        if (newAccessToken) {
-          apiClientMethods.setAccessToken(newAccessToken);
-          return axios(originalConfig);
-        }
+        return axios(originalConfig);
       } catch (refreshError) {
         console.error(refreshError);
-        // logout 혹은 clear accessToken;
+        // TODO: logout 혹은 clear accessToken;
         return Promise.reject(refreshError);
       }
     }
 
-    // logout 혹은 clear accessToken;
+    // TODO: logout 혹은 clear accessToken;
     return Promise.reject(error);
   },
 );
