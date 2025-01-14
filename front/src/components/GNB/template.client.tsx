@@ -1,13 +1,18 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { LOGIN_MENU_ITEM, MAIN_MENU_LIST, MYPAGE_MENU_ITEM, SUB_MENU_LIST } from './constant';
 import * as S from './style.css';
+import APIs from '@/apis';
+import { PAGE_URLS } from '@/constants/page-urls';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   isLoggedIn: boolean;
 };
 
 const ClientComponent: React.FC<Props> = ({ isLoggedIn }) => {
+  const router = useRouter();
   const getSubMenuListWithLoginMenu = () => {
     const menuList = [...SUB_MENU_LIST];
 
@@ -18,6 +23,13 @@ const ClientComponent: React.FC<Props> = ({ isLoggedIn }) => {
     }
 
     return menuList;
+  };
+
+  const handleClickLogout = async () => {
+    await APIs.auth.logoutAPI().then(() => {
+      router.push(PAGE_URLS.home);
+      router.refresh();
+    });
   };
 
   return (
@@ -49,6 +61,11 @@ const ClientComponent: React.FC<Props> = ({ isLoggedIn }) => {
           </div>
         </div>
         <div className={S.right}>
+          {isLoggedIn && (
+            <div className={S.rightMenuItem} key='로그아웃' onClick={handleClickLogout}>
+              로그아웃
+            </div>
+          )}
           {getSubMenuListWithLoginMenu().map((item) => {
             switch (item.type) {
               case 'single':

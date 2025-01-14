@@ -44,6 +44,21 @@ export class AuthController {
     res.json({ accessToken: tokens.accessToken });
   }
 
+  @Post('logout')
+  logout(@Res() res: Response) {
+    res.clearCookie(ACCESS_TOKEN_KEY, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    });
+
+    res.clearCookie(REFRESH_TOKEN_KEY, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    });
+
+    return res.json({});
+  }
+
   @Post('refresh-token') // TODO: 작업
   async refreshToken(@Req() req: Request, @Res() res: Response) {
     const refreshToken = req.cookies[REFRESH_TOKEN_KEY];

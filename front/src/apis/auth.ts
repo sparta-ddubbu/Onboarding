@@ -7,6 +7,10 @@ const signInAPI = async function ({ nickname, password }: SignInRequest) {
   return res;
 };
 
+const logoutAPI = async function () {
+  return apiClient.post('/auth/logout');
+};
+
 const signUpAPI = async function ({ nickname, password }: SignUpRequest) {
   return apiClient.post<SignUpRequest, SignUpResponse>('/auth/sign-up', { nickname, password });
 };
@@ -17,6 +21,7 @@ const refreshAPI = async function () {
 
 export const authAPIs = {
   signInAPI,
+  logoutAPI,
   signUpAPI,
   refreshAPI,
 };

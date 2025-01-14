@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 type TokenManagerReturn = {
   isLoggedIn: boolean;
-  clearTokens: () => void;
+  clearTokens: () => Promise<void>;
 };
 
 const AT_KEY = 'accessToken';
