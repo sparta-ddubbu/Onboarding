@@ -2,10 +2,10 @@
 
 import React from 'react';
 import ClientComponent from './template.client';
-import { tokenManager } from '@/apis/jwt/server-side.util';
+import { severTokenManager } from '@/apis/jwt/server-side.util';
 
 const ServerComponent = async () => {
-  const { isLoggedIn } = await tokenManager();
+  const { isLoggedIn } = await severTokenManager();
 
   return <ClientComponent isLoggedIn={isLoggedIn} />;
 };
