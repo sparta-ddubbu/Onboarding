@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignUpFormParams, SignUpProps } from '@/app/sign-up/components/template';
 import { SignUpSchema } from './constant';
-import serverAPIs from '@/apis/server/server';
+import clientAPIs from '@/apis/client';
 
 export const useSignUp = (): SignUpProps => {
   const {
@@ -13,7 +13,7 @@ export const useSignUp = (): SignUpProps => {
 
   const submitAction = async (data: SignUpFormParams) => {
     try {
-      await serverAPIs.auth.signUpAPI(data).then(() => {
+      await clientAPIs.auth.signUpAPI(data).then(() => {
         console.log('SignUp successful');
       });
     } catch (e) {
