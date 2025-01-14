@@ -1,11 +1,12 @@
+'use server';
 import React from 'react';
-import MypageComponent from './components/template';
+import ServerComponent from './components/template.server';
 import CheckLoginServerComponent from '@/container/CheckLoginServerComponent';
 
 const Mypage = () => {
   return (
     <CheckLoginServerComponent>
-      <MypageComponent />
+      <ServerComponent />
     </CheckLoginServerComponent>
   );
 };
