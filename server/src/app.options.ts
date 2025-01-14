@@ -8,7 +8,6 @@ export function getCorsOptions(): CorsOptions {
 
   return {
     origin: [...whitelist.local, ...whitelist.prod],
-    methods: ['POST', 'PUT', 'DELETE', 'GET'],
     credentials: true,
   };
 }

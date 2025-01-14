@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt/guard';
 import { UserService } from './user.service';
 
@@ -8,10 +8,13 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('info')
-  getUserInfo() {
-    const userId = 'todo';
-    this.userService.findOne(userId);
-
-    return { message: 'This is protected data' };
+  async getUserInfo(@Request() req) {
+    const userId = req.user.id;
+    const user = await this.userService.findOne(userId);
+    if (user) {
+      return { userId, nickname: user.nickname };
+    } else {
+      return {}; // TODO: error
+    }
   }
 }
