@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { severTokenManager } from '../jwt/server-side.util';
+import { severTokenManager } from '../jwt/util.server';
 
 const serverAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

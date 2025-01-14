@@ -1,6 +1,6 @@
 'use server';
 
-import { severTokenManager } from '@/apis/jwt/server-side.util';
+import { severTokenManager } from '@/apis/jwt/util.server';
 import { PAGE_URLS } from '@/constants/page-urls';
 import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
