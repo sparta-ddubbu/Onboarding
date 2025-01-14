@@ -5,9 +5,9 @@ import CheckLoginServerComponent from '@/container/CheckLoginServerComponent';
 
 const Mypage = () => {
   return (
-    <CheckLoginServerComponent>
-      <ServerComponent />
-    </CheckLoginServerComponent>
+    // <CheckLoginServerComponent>
+    <ServerComponent />
+    // </CheckLoginServerComponent>
   );
 };
 
