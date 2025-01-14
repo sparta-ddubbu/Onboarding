@@ -1,6 +1,6 @@
 'use server';
 
-import serverAPIs from '@/apis/server/server';
+import serverAPIs from '@/apis/server';
 import * as S from './style.css';
 
 const ServerComponent = async () => {

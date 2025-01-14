@@ -75,7 +75,7 @@ export class AuthController {
       res.cookie(ACCESS_TOKEN_KEY, tokens.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 1000, // TODO: 발급 유효기간과 통일 필요
+        maxAge: 5 * 1000, // TODO: 발급 유효기간과 통일 필요
       });
 
       res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, {

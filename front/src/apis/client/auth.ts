@@ -13,8 +13,13 @@ const signUpAPI = async function ({ nickname, password }: SignUpRequest) {
   return clientAxios.post<SignUpRequest, SignUpResponse>('/auth/sign-up', { nickname, password });
 };
 
+const refreshAPI = async function () {
+  return clientAxios.post('/auth/refresh-token');
+};
+
 export const authAPIs = {
   signInAPI,
   logoutAPI,
   signUpAPI,
+  refreshAPI,
 };
