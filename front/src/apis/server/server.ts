@@ -1,9 +1,9 @@
 import { authAPIs } from './auth';
 import { userAPIs } from './users';
 
-const APIs = {
+const serverAPIs = {
   auth: authAPIs,
   user: userAPIs,
 };
 
-export default APIs;
+export default serverAPIs;

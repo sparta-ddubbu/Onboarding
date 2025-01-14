@@ -1,10 +1,8 @@
-import serverAxios from './api.server';
-import { SignInResponse, SignInRequest, SignUpRequest, SignUpResponse, RefreshResponse } from './auth.type';
+import serverAxios from './axios';
+import { SignInRequest, SignUpRequest, SignUpResponse } from './auth.type';
 
 const signInAPI = async function ({ nickname, password }: SignInRequest) {
-  const res = await serverAxios.post<SignInRequest, SignInResponse>('/auth/sign-in', { nickname, password });
-
-  return res;
+  return serverAxios.post<SignInRequest>('/auth/sign-in', { nickname, password });
 };
 
 const logoutAPI = async function () {
@@ -15,13 +13,8 @@ const signUpAPI = async function ({ nickname, password }: SignUpRequest) {
   return serverAxios.post<SignUpRequest, SignUpResponse>('/auth/sign-up', { nickname, password });
 };
 
-const refreshAPI = async function () {
-  return serverAxios.post<null, RefreshResponse>('/auth/refresh-token');
-};
-
 export const authAPIs = {
   signInAPI,
   logoutAPI,
   signUpAPI,
-  refreshAPI,
 };

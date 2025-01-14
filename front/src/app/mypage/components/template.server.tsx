@@ -1,12 +1,12 @@
 'use server';
 
-import APIs from '@/apis';
+import serverAPIs from '@/apis/server/server';
 import * as S from './style.css';
 
 const ServerComponent = async () => {
   let nickname;
   try {
-    await APIs.user.getInfoAPI().then(({ data }) => {
+    await serverAPIs.user.getInfoAPI().then(({ data }) => {
       nickname = data.nickname;
     });
   } catch (error) {

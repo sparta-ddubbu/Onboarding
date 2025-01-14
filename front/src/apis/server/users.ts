@@ -1,4 +1,4 @@
-import serverAxios from './api.server';
+import serverAxios from './axios';
 import { UserInfoResponse } from './users.type';
 
 const getInfoAPI = async function () {

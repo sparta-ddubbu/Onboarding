@@ -3,9 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { LOGIN_MENU_ITEM, MAIN_MENU_LIST, MYPAGE_MENU_ITEM, SUB_MENU_LIST } from './constant';
 import * as S from './style.css';
-import APIs from '@/apis';
 import { PAGE_URLS } from '@/constants/page-urls';
 import { useRouter } from 'next/navigation';
+import clientAPIs from '@/apis/client';
 
 type Props = {
   isLoggedIn: boolean;
@@ -26,7 +26,7 @@ const ClientComponent: React.FC<Props> = ({ isLoggedIn }) => {
   };
 
   const handleClickLogout = async () => {
-    await APIs.auth.logoutAPI().then(() => {
+    await clientAPIs.auth.logoutAPI().then(() => {
       router.push(PAGE_URLS.home);
       router.refresh();
     });
