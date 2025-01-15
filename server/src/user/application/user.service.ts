@@ -1,31 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Inject, Injectable } from '@nestjs/common';
+import { UserRepositoryToken } from '../adapter/out/user.repository';
+import { UserRepositoryPort } from './port/out/user.repository.port';
 import * as bcrypt from 'bcrypt';
-import { User, UserDocument } from '../adapter/out/user.schema';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
-
+  constructor(@Inject(UserRepositoryToken) private readonly userRepository: UserRepositoryPort) {}
   async create(createUserDto: { username: string; password: string }) {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-
-    const newUser = new this.userModel({
-      ...createUserDto,
-      password: hashedPassword,
-    });
-
-    await newUser.save();
-
+    const userDto = { ...createUserDto, password: hashedPassword };
+    await this.userRepository.create(userDto);
     return {};
   }
 
-  async findOne(id: string): Promise<User> {
-    return this.userModel.findById(id).exec();
+  async findOne(id: string) {
+    return this.userRepository.findOne(id);
   }
 
-  async findOneByNickname(nickname: string): Promise<User | null> {
-    return this.userModel.findOne({ nickname }).exec();
+  async findOneByNickname(nickname: string) {
+    return this.userRepository.findOneByNickname(nickname);
   }
 }
