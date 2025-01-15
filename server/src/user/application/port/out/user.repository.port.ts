@@ -1,4 +1,4 @@
-import { UserDomain } from 'src/user/domain/user.domain';
+import { UserDomain } from '../../../../user/domain/user.domain';
 
 export interface UserRepositoryPort {
   create(createUserDto: { nickname: string; password: string }): Promise<UserDomain>;

@@ -20,7 +20,13 @@ export class UserService {
   }
 
   async findOne(id: string) {
-    return this.userRepository.findOne(id);
+    const user = this.userRepository.findOne(id);
+
+    if (!user) {
+      throw new HttpException('존재하지 않는 유저입니다.', HttpStatus.BAD_REQUEST);
+    }
+
+    return user;
   }
 
   async findOneByNickname(nickname: string) {
