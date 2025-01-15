@@ -1,8 +1,8 @@
 import { Controller, Post, Body, UnauthorizedException, Res, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserService } from 'src/user/user.service';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
+import { UserService } from 'src/user/application/user.service';
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserService } from 'src/user/user.service';
 import { TokenPayload } from './jwt/jwt.strategy';
+import { UserService } from 'src/user/application/user.service';
 
 type TokenSet = { accessToken: string; refreshToken: string };
 
