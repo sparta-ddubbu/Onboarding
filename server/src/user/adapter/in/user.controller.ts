@@ -12,7 +12,7 @@ export class UserController {
     const userId = req.user.id;
     const user = await this.userService.findOne(userId);
     if (user) {
-      return { userId, nickname: user.nickname };
+      return { userId, nickname: user.nickname }; // TODO: dto
     } else {
       return {}; // TODO: error
     }

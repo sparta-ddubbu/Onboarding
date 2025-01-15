@@ -1,25 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserRepositoryPort } from 'src/user/application/port/out/user.repository.port';
-import { User, UserDocument } from './user.schema';
+import { UserEntity, UserDocument } from './user.schema';
+import { UserMapper, UserMapperToken } from './user.mapper';
 
 export const UserRepositoryToken = 'UserRepositoryToken';
 
 @Injectable()
 export class UserRepository implements UserRepositoryPort {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(UserEntity.name) private readonly userModel: Model<UserDocument>,
+    @Inject(UserMapperToken) private readonly userMapper: UserMapper,
+  ) {}
 
-  async create(createUserDto: { username: string; password: string }): Promise<void> {
+  async create(createUserDto: { nickname: string; password: string }) {
     const newUser = new this.userModel(createUserDto);
-    await newUser.save();
+    const savedUser = await newUser.save();
+    return this.userMapper.mapEntityToDomain(savedUser);
   }
 
-  async findOne(id: string): Promise<User | null> {
-    return this.userModel.findById(id).exec();
+  async findOne(id: string) {
+    const user = await this.userModel.findById(id);
+    return this.userMapper.mapEntityToDomain(user);
   }
 
-  async findOneByNickname(nickname: string): Promise<User | null> {
-    return this.userModel.findOne({ nickname }).exec();
+  async findOneByNickname(nickname: string) {
+    const user = await this.userModel.findOne({ nickname });
+
+    return this.userMapper.mapEntityToDomain(user);
   }
 }

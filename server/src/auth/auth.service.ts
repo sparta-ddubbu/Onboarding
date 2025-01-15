@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { TokenPayload } from './jwt/jwt.strategy';
-import { UserService } from 'src/user/application/user.service';
+import { UserService } from '../user/application/user.service';
 
 type TokenSet = { accessToken: string; refreshToken: string };
 
@@ -15,8 +15,9 @@ export class AuthService {
 
   async validateUser(nickname: string, password: string): Promise<TokenPayload | null> {
     const user = await this.userService.findOneByNickname(nickname);
+
     if (user && (await bcrypt.compare(password, user.password))) {
-      return { id: user._id.toString(), nickname: user.nickname };
+      return { id: user.id, nickname: user.nickname };
     }
     return null;
   }

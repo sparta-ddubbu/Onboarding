@@ -1,7 +1,7 @@
-import { User } from 'src/user/adapter/out/user.schema';
+import { UserDomain } from 'src/user/domain/user.domain';
 
 export interface UserRepositoryPort {
-  create(createUserDto: { username: string; password: string }): Promise<void>;
-  findOne(id: string): Promise<User | null>;
-  findOneByNickname(nickname: string): Promise<User | null>;
+  create(createUserDto: { nickname: string; password: string }): Promise<UserDomain>;
+  findOne(id: string): Promise<UserDomain | null>;
+  findOneByNickname(nickname: string): Promise<UserDomain | null>;
 }
