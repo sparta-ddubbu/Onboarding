@@ -3,10 +3,14 @@ import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/application/user.service';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CreateUserReqDto } from '../user/adapter/dto/req/user.dto';
+import { SignInReqDto } from './auth.controller.dto';
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -16,12 +20,18 @@ export class AuthController {
   ) {}
 
   @Post('sign-up')
-  async create(@Body() createUserDto: { nickname: string; password: string }) {
+  @ApiOperation({ summary: 'Sign up a new user' })
+  @ApiResponse({ status: 201, description: 'User successfully registered' })
+  @ApiResponse({ status: 400, description: 'Invalid input data' })
+  async create(@Body() createUserDto: CreateUserReqDto) {
     return this.userService.create(createUserDto);
   }
 
   @Post('sign-in')
-  async login(@Body() loginDto: { nickname: string; password: string }, @Res() res: Response) {
+  @ApiOperation({ summary: 'Login to get JWT tokens' })
+  @ApiResponse({ status: 200, description: 'User successfully logged in' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials' })
+  async login(@Body() loginDto: SignInReqDto, @Res() res: Response) {
     const payload = await this.authService.validateUser(loginDto.nickname, loginDto.password);
     if (!payload) {
       throw new UnauthorizedException('Invalid credentials');
@@ -32,20 +42,22 @@ export class AuthController {
     res.cookie(ACCESS_TOKEN_KEY, tokens.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 5 * 1000, // TODO: 발급 유효기간과 통일 필요
+      maxAge: 60 * 60 * 1000,
     });
 
     res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // TODO: 발급 유효기간과 통일 필요
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.json({});
   }
 
   @Post('logout')
-  logout(@Res() res: Response) {
+  @ApiOperation({ summary: 'Logout and clear cookies' })
+  @ApiResponse({ status: 200, description: 'User successfully logged out' })
+  async logout(@Res() res: Response) {
     res.clearCookie(ACCESS_TOKEN_KEY, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -59,7 +71,10 @@ export class AuthController {
     return res.json({});
   }
 
-  @Post('refresh-token') // TODO: 작업
+  @Post('refresh-token')
+  @ApiOperation({ summary: 'Refresh access token using refresh token' }) // POST /auth/refresh-token
+  @ApiResponse({ status: 200, description: 'Tokens successfully refreshed' })
+  @ApiResponse({ status: 401, description: 'Invalid refresh token' })
   async refreshToken(@Req() req: Request, @Res() res: Response) {
     const refreshToken = req.cookies[REFRESH_TOKEN_KEY];
 
@@ -75,13 +90,13 @@ export class AuthController {
       res.cookie(ACCESS_TOKEN_KEY, tokens.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 5 * 1000, // TODO: 발급 유효기간과 통일 필요
+        maxAge: 60 * 60 * 1000,
       });
 
       res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 7 * 24 * 60 * 60 * 1000, // TODO: 발급 유효기간과 통일 필요
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
       return res.send({});
