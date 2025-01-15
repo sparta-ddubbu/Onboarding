@@ -30,4 +30,8 @@ export class UserRepository implements UserRepositoryPort {
 
     return this.userMapper.mapEntityToDomain(user);
   }
+
+  async delete(userId: string) {
+    await this.userModel.findByIdAndDelete(userId);
+  }
 }
