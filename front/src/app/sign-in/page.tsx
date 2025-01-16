@@ -2,11 +2,17 @@
 
 import React from 'react';
 import SignInComponent from '@/app/sign-in/components/template';
-import { useSignIn } from './components/hooks';
+import ErrorModalBoundary from '@/components/ErrorModalBoundary/template.client';
+import { ErrorModalProvider } from '@/components/ErrorModalBoundary/ErrorModalProvider';
 
 const SignInPage = () => {
-  const props = useSignIn();
-  return <SignInComponent {...props} />;
+  return (
+    <ErrorModalProvider>
+      <ErrorModalBoundary>
+        <SignInComponent />
+      </ErrorModalBoundary>
+    </ErrorModalProvider>
+  );
 };
 
 export default SignInPage;

@@ -5,6 +5,7 @@ import { Button } from '@teamsparta/stack-button';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { SignInSchemaType } from './constant';
 import { StackProvider } from '@teamsparta/stack-core';
+import { useSignIn } from './hooks';
 
 export type SignInFormParams = SignInSchemaType & {};
 
@@ -14,7 +15,8 @@ export type SignInProps = {
   errors: FieldErrors<SignInFormParams>;
 };
 
-const SignInComponent = (props: SignInProps) => {
+const SignInComponent = () => {
+  const props = useSignIn(); // useContext 초기화를 위해 안쪽으로 들어옴
   return (
     <StackProvider theme='nbcLight'>
       <S.Background>

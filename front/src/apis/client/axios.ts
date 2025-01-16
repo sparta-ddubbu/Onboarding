@@ -1,6 +1,35 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import clientAPIs from '.';
 import { severTokenManager } from '../jwt/util.server';
+
+interface ServerError {
+  id: string;
+  domain: 'auth' | 'user';
+  message: string;
+  apiMessage: string;
+  status: number;
+  timestamp: string;
+}
+
+interface AxiosErrorWithBusinessError {
+  response: AxiosResponse<ServerError>;
+  config: AxiosRequestConfig & { _retry?: boolean };
+}
+
+export class BusinessError {
+  id: string;
+  domain: 'auth' | 'user';
+  apiMessage: string;
+  // message: string;
+  // status: number;
+  // timestamp: string;
+
+  constructor(error: ServerError) {
+    this.id = error.id;
+    this.domain = error.domain;
+    this.apiMessage = error.apiMessage || '잠시 후 다시 시도해주세요';
+  }
+}
 
 const clientAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -21,10 +50,10 @@ clientAxios.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
 clientAxios.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    console.log('interceptor error', error);
+  async (error: AxiosErrorWithBusinessError) => {
     const originalConfig = error.config;
 
     if (error.response?.status === 401 && !originalConfig._retry) {
@@ -41,12 +70,9 @@ clientAxios.interceptors.response.use(
         // TODO: 로그아웃
         return Promise.reject(refreshError);
       }
-    } else {
-      // TODO: error modal
     }
 
-    // TODO: 로그아웃
-    return Promise.reject(error);
+    throw new BusinessError(error.response.data);
   },
 );
 

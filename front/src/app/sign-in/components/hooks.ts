@@ -7,9 +7,13 @@ import { SignInSchema } from './constant';
 import clientAPIs from '@/apis/client';
 import { PAGE_URLS } from '@/constants/page-urls';
 import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+import { ErrorModalContext } from '@/components/ErrorModalBoundary/ErrorModalProvider';
 
 export const useSignIn = (): SignInProps => {
   const router = useRouter();
+  const context = useContext(ErrorModalContext);
+
   const {
     formState: { errors },
     register,
@@ -17,14 +21,15 @@ export const useSignIn = (): SignInProps => {
   } = useForm<SignInFormParams>({ resolver: zodResolver(SignInSchema) });
 
   const submitAction = async (data: SignInFormParams) => {
-    try {
-      await clientAPIs.auth.signInAPI(data).then(() => {
+    await clientAPIs.auth
+      .signInAPI(data)
+      .then(() => {
         router.push(PAGE_URLS.home);
         router.refresh();
+      })
+      .catch((err) => {
+        context.throwError(err);
       });
-    } catch (e) {
-      console.error('SignIn failed:', e);
-    }
   };
 
   return {
