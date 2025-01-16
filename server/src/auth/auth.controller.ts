@@ -37,9 +37,6 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() loginDto: SignInReqDto, @Res() res: Response) {
     const payload = await this.authService.validateUser(loginDto.nickname, loginDto.password);
-    if (!payload) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
 
     const tokens = this.authService.generateTokens(payload);
 

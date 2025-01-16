@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { TokenPayload } from './jwt/jwt.strategy';
 import { UserService } from '../user/application/user.service';
+import { BusinessException } from 'src/exception/BusinessException';
 
 type TokenSet = { accessToken: string; refreshToken: string };
 
@@ -19,7 +20,8 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       return { id: user.id, nickname: user.nickname };
     }
-    return null;
+
+    throw new BusinessException('auth', 'LOGIN_FAILED', '로그인에 실패했습니다', HttpStatus.BAD_REQUEST);
   }
 
   generateTokens(data: TokenPayload): TokenSet {
