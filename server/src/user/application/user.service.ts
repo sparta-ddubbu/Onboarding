@@ -4,6 +4,7 @@ import { UserRepositoryPort } from './port/out/user.repository.port';
 import * as bcrypt from 'bcrypt';
 import { CreateUserReqDto } from '../adapter/dto/req/user.dto';
 import { BusinessException } from 'src/exception/BusinessException';
+import { ErrorCode } from 'src/exception/error-code';
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,12 @@ export class UserService {
     const existingUser = await this.userRepository.findOneByNickname(createUserDto.nickname);
 
     if (existingUser) {
-      throw new BusinessException('user', 'DUPLICATED_NICKNAME', '닉네임 중복입니다', HttpStatus.BAD_REQUEST);
+      throw new BusinessException(
+        ErrorCode.USER_DUP_NICKNAME,
+        `시도 - ${createUserDto.nickname}`,
+        '닉네임 중복입니다',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
@@ -24,7 +30,7 @@ export class UserService {
     const user = this.userRepository.findOne(id);
 
     if (!user) {
-      throw new BusinessException('user', 'NOT_FOUND_USER', '존재하지 않는 유저입니다', HttpStatus.BAD_REQUEST);
+      throw new BusinessException(ErrorCode.NOT_FOUND_USER, '', '존재하지 않는 유저입니다', HttpStatus.BAD_REQUEST);
     }
 
     return user;
@@ -37,7 +43,7 @@ export class UserService {
   async deleteByUserId(userId: string): Promise<void> {
     const user = await this.userRepository.findOne(userId);
     if (!user) {
-      throw new BusinessException('user', 'NOT_FOUND_USER', '존재하지 않는 유저입니다', HttpStatus.BAD_REQUEST);
+      throw new BusinessException(ErrorCode.NOT_FOUND_USER, '', '존재하지 않는 유저입니다', HttpStatus.BAD_REQUEST);
     }
 
     await this.userRepository.delete(userId);

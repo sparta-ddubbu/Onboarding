@@ -4,7 +4,7 @@ import { severTokenManager } from '../jwt/util.server';
 
 interface ServerError {
   id: string;
-  domain: 'auth' | 'user';
+  errorCode: string;
   message: string;
   apiMessage: string;
   status: number;
@@ -18,15 +18,12 @@ interface AxiosErrorWithBusinessError {
 
 export class BusinessError {
   id: string;
-  domain: 'auth' | 'user';
+  errorCode: string;
   apiMessage: string;
-  // message: string;
-  // status: number;
-  // timestamp: string;
 
   constructor(error: ServerError) {
     this.id = error.id;
-    this.domain = error.domain;
+    this.errorCode = error.errorCode;
     this.apiMessage = error.apiMessage || '잠시 후 다시 시도해주세요';
   }
 }

@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { TokenPayload } from './jwt/jwt.strategy';
 import { UserService } from '../user/application/user.service';
 import { BusinessException } from 'src/exception/BusinessException';
+import { ErrorCode } from 'src/exception/error-code';
 
 type TokenSet = { accessToken: string; refreshToken: string };
 
@@ -17,11 +18,25 @@ export class AuthService {
   async validateUser(nickname: string, password: string): Promise<TokenPayload | null> {
     const user = await this.userService.findOneByNickname(nickname);
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (!user) {
+      throw new BusinessException(
+        ErrorCode.AUTH_LOGIN_FAILED_1,
+        '검증 실패',
+        '닉네임을 다시 확인해주세요',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (await bcrypt.compare(password, user.password)) {
       return { id: user.id, nickname: user.nickname };
     }
 
-    throw new BusinessException('auth', 'LOGIN_FAILED', '로그인에 실패했습니다', HttpStatus.BAD_REQUEST);
+    throw new BusinessException(
+      ErrorCode.AUTH_LOGIN_FAILED_2,
+      '검증 실패',
+      '비밀번호를 다시 확인해주세요',
+      HttpStatus.BAD_REQUEST,
+    );
   }
 
   generateTokens(data: TokenPayload): TokenSet {

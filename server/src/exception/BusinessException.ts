@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { ErrorCode } from './error-code';
 
 export type ErrorDomain = 'auth' | 'user';
 
@@ -7,7 +8,7 @@ export class BusinessException extends HttpException {
   public readonly timestamp: Date;
 
   constructor(
-    public readonly domain: ErrorDomain,
+    public readonly errorCode: ErrorCode,
     public readonly message: string, // 로깅 메시지
     public readonly apiMessage: string, // 사용자 메시지
     status: HttpStatus,
@@ -15,7 +16,7 @@ export class BusinessException extends HttpException {
     super(
       {
         id: BusinessException.genId(),
-        domain,
+        errorCode,
         message,
         apiMessage,
         status,
