@@ -2,7 +2,7 @@ import { Controller, Post, Body, UnauthorizedException, Res, Req } from '@nestjs
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/application/user.service';
+import { UserService } from '../user/application/user.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserReqDto } from '../user/adapter/dto/req/user.dto';
 import { SignInReqDto } from './auth.controller.dto';
