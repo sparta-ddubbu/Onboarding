@@ -32,6 +32,7 @@ export const MAIN_MENU_LIST: MenuItemType[] = [
   { type: 'single', title: '이벤트', href: 'TODO' },
 ];
 
+export const SIGNUP_MENU_ITEM: MenuItemType = { type: 'single', title: '회원가입', href: '/sign-up' };
 export const LOGIN_MENU_ITEM: MenuItemType = { type: 'single', title: '로그인', href: '/sign-in' };
 export const MYPAGE_MENU_ITEM: MenuItemType = { type: 'single', title: '마이페이지', href: '/mypage' };
 export const SUB_MENU_LIST: MenuItemType[] = [{ type: 'single', title: '고객센터', href: 'TODO' }];

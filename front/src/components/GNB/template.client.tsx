@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { LOGIN_MENU_ITEM, MAIN_MENU_LIST, MYPAGE_MENU_ITEM, SUB_MENU_LIST } from './constant';
+import { LOGIN_MENU_ITEM, MAIN_MENU_LIST, MYPAGE_MENU_ITEM, SIGNUP_MENU_ITEM, SUB_MENU_LIST } from './constant';
 import * as S from './style.css';
 import { PAGE_URLS } from '@/constants/page-urls';
 import { useRouter } from 'next/navigation';
@@ -20,6 +20,7 @@ const ClientComponent: React.FC<Props> = ({ isLoggedIn }) => {
       menuList.unshift(MYPAGE_MENU_ITEM);
     } else {
       menuList.unshift(LOGIN_MENU_ITEM);
+      menuList.unshift(SIGNUP_MENU_ITEM);
     }
 
     return menuList;
