@@ -1,5 +1,5 @@
 import { Controller, Post, Body, UnauthorizedException, Res, Req, UsePipes } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService, REFRESH_TOKEN_KEY } from './auth.service';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/application/user.service';
@@ -7,9 +7,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserReqDto, createUserReqDtoSchema } from '../user/adapter/dto/req/user.dto';
 import { SignInReqDto } from './auth.controller.dto';
 import { RequestBodyValidator } from '../utils/validation/validator.util';
-
-const ACCESS_TOKEN_KEY = 'accessToken';
-const REFRESH_TOKEN_KEY = 'refreshToken';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -38,20 +35,7 @@ export class AuthController {
   async login(@Body() loginDto: SignInReqDto, @Res() res: Response) {
     const payload = await this.authService.validateUser(loginDto.nickname, loginDto.password);
 
-    const tokens = this.authService.generateTokens(payload);
-
-    res.cookie(ACCESS_TOKEN_KEY, tokens.accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 1000,
-    });
-
-    res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
+    this.authService.generateTokensAndSetCookies(payload, res);
     res.json({});
   }
 
@@ -59,16 +43,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Logout and clear cookies' })
   @ApiResponse({ status: 200, description: 'User successfully logged out' })
   async logout(@Res() res: Response) {
-    res.clearCookie(ACCESS_TOKEN_KEY, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-    });
-
-    res.clearCookie(REFRESH_TOKEN_KEY, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-    });
-
+    this.authService.clearTokensInCookies(res);
     return res.json({});
   }
 
@@ -85,22 +60,8 @@ export class AuthController {
 
     try {
       const payload = this.jwtService.verify(refreshToken);
-
-      const tokens = this.authService.generateTokens(payload);
-
-      res.cookie(ACCESS_TOKEN_KEY, tokens.accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 1000,
-      });
-
-      res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-
-      return res.send({});
+      this.authService.generateTokensAndSetCookies(payload, res);
+      res.json({});
     } catch (err) {
       throw new UnauthorizedException('Invalid refresh token');
     }

@@ -5,8 +5,20 @@ import { TokenPayload } from './jwt/jwt.strategy';
 import { UserService } from '../user/application/user.service';
 import { BusinessException } from '../exception/BusinessException';
 import { ErrorCode } from '../exception/error-code';
+import { CookieOptions, Response } from 'express';
 
-type TokenSet = { accessToken: string; refreshToken: string };
+const ACCESS_TOKEN_KEY = 'accessToken';
+export const REFRESH_TOKEN_KEY = 'refreshToken';
+
+const cookieOptions: CookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+};
+
+const ExpireOptions = {
+  accessToken: 60 * 60 * 1000,
+  refreshToekn: 7 * 24 * 60 * 60 * 1000,
+};
 
 @Injectable()
 export class AuthService {
@@ -39,12 +51,25 @@ export class AuthService {
     );
   }
 
-  generateTokens(data: TokenPayload): TokenSet {
+  clearTokensInCookies(res: Response) {
+    res.clearCookie(ACCESS_TOKEN_KEY, cookieOptions);
+    res.clearCookie(REFRESH_TOKEN_KEY, cookieOptions);
+  }
+
+  generateTokensAndSetCookies(data: TokenPayload, res: Response) {
     const payload = { nickname: data.nickname, id: data.id };
 
     const accessToken = this.jwtService.sign(payload, { expiresIn: '1h' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    return { accessToken, refreshToken };
+    res.cookie(ACCESS_TOKEN_KEY, accessToken, {
+      ...cookieOptions,
+      maxAge: ExpireOptions.accessToken,
+    });
+
+    res.cookie(REFRESH_TOKEN_KEY, refreshToken, {
+      ...cookieOptions,
+      maxAge: ExpireOptions.refreshToekn,
+    });
   }
 }
