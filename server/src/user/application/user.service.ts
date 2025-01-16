@@ -3,8 +3,8 @@ import { UserRepositoryToken } from '../adapter/out/user.repository';
 import { UserRepositoryPort } from './port/out/user.repository.port';
 import * as bcrypt from 'bcrypt';
 import { CreateUserReqDto } from '../adapter/dto/req/user.dto';
-import { BusinessException } from 'src/exception/BusinessException';
-import { ErrorCode } from 'src/exception/error-code';
+import { BusinessException } from '../../exception/BusinessException';
+import { ErrorCode } from '../../exception/error-code';
 
 @Injectable()
 export class UserService {
@@ -15,7 +15,7 @@ export class UserService {
     if (existingUser) {
       throw new BusinessException(
         ErrorCode.USER_DUP_NICKNAME,
-        `시도 - ${createUserDto.nickname}`,
+        '닉네임 중복입니다',
         '닉네임 중복입니다',
         HttpStatus.BAD_REQUEST,
       );

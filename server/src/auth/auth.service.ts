@@ -3,8 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { TokenPayload } from './jwt/jwt.strategy';
 import { UserService } from '../user/application/user.service';
-import { BusinessException } from 'src/exception/BusinessException';
-import { ErrorCode } from 'src/exception/error-code';
+import { BusinessException } from '../exception/BusinessException';
+import { ErrorCode } from '../exception/error-code';
 
 type TokenSet = { accessToken: string; refreshToken: string };
 
