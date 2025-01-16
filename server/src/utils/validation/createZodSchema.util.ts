@@ -20,11 +20,14 @@ function getPropsWithTypeAndRequiredValueFromSwaggerApiProps(className: any) {
     // 실제 JS 레벨의 생성자 (예: String, Number, Boolean, RewardCondition, ...)
     const metadataType = Reflect.getMetadata('design:type', className.prototype, cleanKey);
 
+    const minLength = metadata?.minLength || null;
+
     return {
       name: cleanKey,
       type: metadataType,
       required: metadata?.required === undefined || metadata?.required,
       enum: metadata?.enum || null,
+      minLength,
     };
   });
 
@@ -47,6 +50,12 @@ function convertSwaggerApiPropsToZodObject(props: any[]): ZodObject<any> {
       // 기본 타입 분기
       if (actualType === String) {
         zodType = z.string().nonempty();
+
+        if (prop.minLength) {
+          zodType = (zodType as z.ZodString).min(prop.minLength, {
+            message: `최소 ${prop.minLength}자 이상 입력해주세요`,
+          });
+        }
       } else if (actualType === Boolean) {
         zodType = z.boolean();
       } else if (actualType === Number) {
