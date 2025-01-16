@@ -6,7 +6,7 @@ import { UserService } from '../user/application/user.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserReqDto, createUserReqDtoSchema } from '../user/adapter/dto/req/user.dto';
 import { SignInReqDto } from './auth.controller.dto';
-import { RequestBodyValidator } from 'src/utils/validation/validator.util';
+import { RequestBodyValidator } from '../utils/validation/validator.util';
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';

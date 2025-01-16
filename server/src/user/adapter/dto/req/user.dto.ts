@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { createZodSchema } from 'src/utils/validation/createZodSchema.util';
+import { createZodSchema } from '../../../../utils/validation/createZodSchema.util';
 
 export class CreateUserReqDto {
   @ApiProperty({
