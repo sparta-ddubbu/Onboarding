@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { createZodSchema } from 'src/utils/validation/createZodSchema.util';
 
 export class CreateUserReqDto {
   @ApiProperty({
@@ -12,3 +13,5 @@ export class CreateUserReqDto {
   })
   password: string;
 }
+
+export const createUserReqDtoSchema = createZodSchema(CreateUserReqDto);

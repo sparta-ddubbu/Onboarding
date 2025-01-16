@@ -1,11 +1,12 @@
-import { Controller, Post, Body, UnauthorizedException, Res, Req } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, Res, Req, UsePipes } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/application/user.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateUserReqDto } from '../user/adapter/dto/req/user.dto';
+import { CreateUserReqDto, createUserReqDtoSchema } from '../user/adapter/dto/req/user.dto';
 import { SignInReqDto } from './auth.controller.dto';
+import { RequestBodyValidator } from 'src/utils/validation/validator.util';
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
@@ -20,11 +21,14 @@ export class AuthController {
   ) {}
 
   @Post('sign-up')
+  @UsePipes(new RequestBodyValidator(createUserReqDtoSchema))
   @ApiOperation({ summary: 'Sign up a new user' })
   @ApiResponse({ status: 201, description: 'User successfully registered' })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   async create(@Body() createUserDto: CreateUserReqDto) {
-    return this.userService.create(createUserDto);
+    const user = await this.userService.create(createUserDto);
+
+    return { userId: user.id, nickname: user.nickname }; // TODO: Response validation
   }
 
   @Post('sign-in')
