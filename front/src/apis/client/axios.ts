@@ -61,7 +61,11 @@ clientAxios.interceptors.response.use(
         await clientAPIs.auth.refreshAPI();
         console.log('갱신 끝');
 
-        return clientAxios(originalConfig);
+        if (typeof window != 'undefined') {
+          window.location.reload(); // ServerSide 토큰 갱신 필요
+          return;
+        }
+        // return clientAxios(originalConfig);
       } catch (refreshError) {
         console.error(refreshError);
         // TODO: 로그아웃
