@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e:background": "cypress open",
+    "test:e2e:cli": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -35,6 +37,8 @@
   },
   "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a",
   "devDependencies": {
-    "@vanilla-extract/webpack-plugin": "^2.3.16"
+    "@types/jest": "^29.5.14",
+    "@vanilla-extract/webpack-plugin": "^2.3.16",
+    "cypress": "^14.0.0"
   }
 }
