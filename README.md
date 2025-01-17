@@ -22,5 +22,6 @@ $ pnpm run start:dev
 $ pnpm run test
 
 # e2e tests
+# mockUserInfo 정보 수정하기 (회원탈퇴 API 생기면 수정 불필요)
 $ pnpm run test:e2e
 ```
