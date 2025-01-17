@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:e2e:background": "cypress open",
+    "test:e2e:open": "cypress open",
     "test:e2e:cli": "cypress run"
   },
   "dependencies": {

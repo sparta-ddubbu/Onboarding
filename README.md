@@ -10,6 +10,11 @@ $ pnpm i
 
 ```bash
 $ pnpm dev
+
+# e2e tests
+# FE, BE 서버 둘다 키고
+
+$ pnpm test:e2e:open
 ```
 
 ## Server
